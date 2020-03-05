@@ -1,0 +1,48 @@
+BSides Commands
+
+1) Make a local copy of my github repository
+cd ~/
+git clone https://github.com/blcklstdbb/bsidessd.git
+cd bsidessd
+
+OR
+
+Drag and drop bsidessd folder to home folder ~/
+cp -r Desktop/bsidessd/ ~/bsidessd
+cd bsidessd
+
+2) Mount DMG
+hdiutil attach samples/JMTTrader.dmg
+cp /Volumes/FlashInstaller/JMTTrader.pkg malware/
+hdiutil detach /Volumes/JMTTrader
+hdiutil info
+
+3) Extract contents of Pkg file
+xar -xf malware/JMTTrader.pkg -C malware/
+ls –la malware/
+
+4) View Bom
+lsbom malware/bom
+
+5) Extract Payload and Scripts contents
+$ cd malware/
+$ cpio –i < Scripts
+$ cpio –i < Payload
+
+6) View Contents of App file
+$ ls -la Applications/JMTTrader.app/Contents/
+$ ls -la Applications/JMTTrader.app/Contents/MacOS
+$ ls -la Applications/JMTTrader.app/Contents/Resources
+
+7) Run script seen in the demo
+$ ~/bsidessd/demo/package_extraction.sh ~/bsidessd/samples/JMTTrader.dmg ~/bsidessd/malware/
+
+8) View downloaded files from browsers
+$ sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "select * from LSQuarantineEvent"
+
+9) View plist file
+$ cat samples/postinstall
+$ cat Applications/JMTTrader.app/Contents/Resources/.org.jmttrading.plist
+
+10) Get those hashes
+$ shasum -a 256 Applications/JMTTrader.app/Contents/Resources/.CrashReporter
